@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import './index.css'
-import App from './App'
+import App from './components/App2'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(

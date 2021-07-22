@@ -86,3 +86,11 @@ class App extends Component {
   }
 }
 ```
+
+## Add pyodide
+
+```bash
+npm install @pyodide/pyodide
+```
+
+Add `public/pyodide/` to the `.gitignore`.
