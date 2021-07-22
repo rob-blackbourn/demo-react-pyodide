@@ -1,5 +1,15 @@
 {
     "cSpell.words": [
-        "pyodide"
-    ]
+        "fontsource",
+        "pyodide",
+        "roboto"
+    ],
+    "[javascriptreact]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    }
 }
