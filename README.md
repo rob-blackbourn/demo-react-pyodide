@@ -89,8 +89,90 @@ class App extends Component {
 
 ## Add pyodide
 
-```bash
-npm install @pyodide/pyodide
+Put the script tag to get the pyodide code in the head of the `index.html`.
+
+```html
+...
+  <head>
+    ...
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.17.0/full/pyodide.js"></script>
+  </head>
+...
 ```
 
-Add `public/pyodide/` to the `.gitignore`.
+Change the `src/App.js` to the following:
+
+```javascript
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+const styles = (theme) => ({
+  progress: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  }
+})
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isLoaded: false,
+      version: '',
+      pyodide: null
+    }
+  }
+
+  getVersion = () => {
+    this.pyodide.runPythonAsync(`
+    import sys
+    sys.version
+`)
+      .then(version => this.setState({ version }))
+      .catch(error => console.log(error))
+  }
+
+  pyodideLoadedHandler = (pyodide) => {
+    this.setState(
+      { isLoaded: true, pyodide },
+      getVersion)
+  }
+
+  componentDidMount() {
+    window
+      .loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.17.0/full/' })
+      .then((response) => {
+        this.pyodideLoadedHandler(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  render() {
+    const { isLoaded, version } = this.state
+    const { classes } = this.props
+
+    if (!isLoaded) {
+      return (
+        <div className={classes.progress}>
+          <CircularProgress />
+        </div>
+      )
+    }
+
+    return <div>{version}</div>
+  }
+}
+
+App.propTypes = {
+  classes: PropTypes.object
+}
+
+export default withStyles(styles)(App)
+```
