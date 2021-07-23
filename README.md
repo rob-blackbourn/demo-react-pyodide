@@ -1,5 +1,7 @@
 # Demo of using React with Python
 
+See it (here [docs](https://rob-blackbourn.github.io/demo-react-pyodide/)).
+
 ## Create the app
 
 ```bash
