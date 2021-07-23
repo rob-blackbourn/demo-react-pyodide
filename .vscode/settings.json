@@ -2,7 +2,9 @@
     "cSpell.words": [
         "bzip",
         "fontsource",
+        "numpy",
         "pyodide",
+        "randint",
         "roboto"
     ],
     "[javascriptreact]": {

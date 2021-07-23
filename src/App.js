@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Typography from '@material-ui/core/Typography'
+import MatrixMultiplication from './components/MatrixMultiplication'
 
 const styles = (theme) => ({
   progress: {
@@ -23,12 +24,27 @@ class App extends Component {
     }
   }
 
+  initialize
+
+  loadPythonPackages = (pyodide) => {
+    return pyodide.loadPackage(['numpy'])
+  }
+
+  getPythonVersion = (pyodide) => {
+    return pyodide.runPythonAsync(
+      `
+import sys
+sys.version
+`
+    )
+  }
+
   pyodideLoadedHandler = (pyodide) => {
-    const version = pyodide.runPython(`
-    import sys
-    sys.version
-`)
-    this.setState({ isLoaded: true, version })
+    this.loadPythonPackages(pyodide)
+      .then(() => this.getPythonVersion(pyodide))
+      .then((version) => {
+        this.setState({ isLoaded: true, version, pyodide })
+      })
   }
 
   componentDidMount() {
@@ -43,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    const { isLoaded, version } = this.state
+    const { isLoaded, version, pyodide } = this.state
     const { classes } = this.props
 
     if (!isLoaded) {
@@ -55,7 +71,12 @@ class App extends Component {
       )
     }
 
-    return <div>{version}</div>
+    return (
+      <div>
+        <div>{version}</div>
+        <MatrixMultiplication pyodide={pyodide} />
+      </div>
+    )
   }
 }
 
