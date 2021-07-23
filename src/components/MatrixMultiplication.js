@@ -86,6 +86,8 @@ class MatrixMultiplication extends Component {
               <>
                 <Matrix values={A} readOnly={true} />
                 <Matrix values={B} readOnly={true} />
+                <span>=</span>
+                <Matrix values={C} readOnly={false} />
               </>
             ) : (
               <Typography variant="body1">Click the button to generate a new exercise</Typography>
