@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { generateDotProductExercise } from '../pythonCode'
 import Matrix from './Matrix'
+import { updateMatrixCell, isMatrixEqual } from '../utils'
 
 const styles = (theme) => ({
   paper: {
@@ -25,6 +26,12 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  rightAnswer: {
+    color: 'green'
+  },
+  wrongAnswer: {
+    color: 'red'
   }
 })
 
@@ -42,7 +49,8 @@ class MatrixMultiplication extends Component {
       p: 1,
       A: [[0]],
       B: [[0]],
-      C: [[0]]
+      C: [[0]],
+      answer: [[0]]
     }
   }
 
@@ -52,6 +60,7 @@ class MatrixMultiplication extends Component {
       .then((result) => {
         this.setState({
           ...result,
+          answer: result.C.map((row) => row.map((col) => '')),
           hasExercise: true
         })
         console.log(result)
@@ -61,6 +70,17 @@ class MatrixMultiplication extends Component {
       })
   }
 
+  onChangeHandler = (i, j, value) => {
+    const intValue = parseInt(value)
+    if (Number.isInteger(intValue)) {
+      value = intValue
+    }
+    const answer = updateMatrixCell(this.state.answer, i, j, value)
+    this.setState({
+      answer
+    })
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
     console.log('handleSubmit')
@@ -68,8 +88,10 @@ class MatrixMultiplication extends Component {
   }
 
   render() {
-    const { maxNumberOfRows, maxNumberOfColumns, hasExercise, m, n, p, A, B, C } = this.state
+    const { maxNumberOfRows, maxNumberOfColumns, hasExercise, A, B, C, answer } = this.state
     const { classes } = this.props
+
+    const isCorrect = isMatrixEqual(C, answer)
 
     return (
       <Container maxWidth="lg">
@@ -87,10 +109,25 @@ class MatrixMultiplication extends Component {
                 <Matrix values={A} readOnly={true} />
                 <Matrix values={B} readOnly={true} />
                 <span>=</span>
-                <Matrix values={C} readOnly={false} />
+                <Matrix values={answer} readOnly={false} onChange={this.onChangeHandler} />
               </>
             ) : (
               <Typography variant="body1">Click the button to generate a new exercise</Typography>
+            )}
+            {hasExercise ? (
+              <div>
+                {isCorrect ? (
+                  <Typography className={classes.rightAnswer} variant="body1">
+                    Correct
+                  </Typography>
+                ) : (
+                  <Typography className={classes.wrongAnswer} variant="body1">
+                    Incorrect
+                  </Typography>
+                )}
+              </div>
+            ) : (
+              ''
             )}
           </div>
         </Paper>
