@@ -7,8 +7,9 @@ m = random.randint(1, ${maxNumberOfRows})
 n = random.randint(1, ${maxNumberOfColumns})
 p = random.randint(1, ${maxNumberOfColumns})
 
-A = np.random.randint(10, size=(m, n))
-B = np.random.randint(10, size=(n, p))
+rng = np.random.default_rng()
+A = rng.integers(low=-10, high=10, size=(m, n), dtype=np.int32)
+B = rng.integers(low=-10, high=10, size=(n, p), dtype=np.int32)
 C = A @ B
   `
 }

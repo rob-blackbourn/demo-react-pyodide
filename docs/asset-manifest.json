@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://rob-blackbourn.github.io/demo-react-pyodide/static/css/main.69b321db.chunk.css",
-    "main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.9021b51f.chunk.js",
-    "main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.9021b51f.chunk.js.map",
+    "main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.1fc6fdd1.chunk.js",
+    "main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.1fc6fdd1.chunk.js.map",
     "runtime-main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/runtime-main.12f66d28.js",
     "runtime-main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/runtime-main.12f66d28.js.map",
     "static/js/2.6c3dd4e3.chunk.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.6c3dd4e3.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.12f66d28.js",
     "static/js/2.6c3dd4e3.chunk.js",
     "static/css/main.69b321db.chunk.css",
-    "static/js/main.9021b51f.chunk.js"
+    "static/js/main.1fc6fdd1.chunk.js"
   ]
 }
