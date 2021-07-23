@@ -5,7 +5,9 @@ import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 import { generateDotProductExercise } from '../pythonCode'
+import Matrix from './Matrix'
 
 const styles = (theme) => ({
   paper: {
@@ -18,6 +20,11 @@ const styles = (theme) => ({
   parameter: {
     width: '12ch',
     margin: theme.spacing(1)
+  },
+  exercise: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
 
@@ -28,7 +35,14 @@ class MatrixMultiplication extends Component {
     this.state = {
       pyodide: props.pyodide,
       maxNumberOfRows: 4,
-      maxNumberOfColumns: 4
+      maxNumberOfColumns: 4,
+      hasExercise: false,
+      m: 1,
+      n: 1,
+      p: 1,
+      A: [[0]],
+      B: [[0]],
+      C: [[0]]
     }
   }
 
@@ -36,6 +50,10 @@ class MatrixMultiplication extends Component {
     const { maxNumberOfRows, maxNumberOfColumns, pyodide } = this.state
     generateDotProductExercise(pyodide, maxNumberOfRows, maxNumberOfColumns)
       .then((result) => {
+        this.setState({
+          ...result,
+          hasExercise: true
+        })
         console.log(result)
       })
       .catch((error) => {
@@ -50,11 +68,11 @@ class MatrixMultiplication extends Component {
   }
 
   render() {
-    const { maxNumberOfRows, maxNumberOfColumns } = this.state
+    const { maxNumberOfRows, maxNumberOfColumns, hasExercise, m, n, p, A, B, C } = this.state
     const { classes } = this.props
 
     return (
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Paper className={classes.paper}>
           <form onSubmit={this.handleSubmit}>
             <TextField className={classes.parameter} type="number" value={maxNumberOfRows} label="Max Rows" />
@@ -63,6 +81,16 @@ class MatrixMultiplication extends Component {
               New Exercise
             </Button>
           </form>
+          <div className={classes.exercise}>
+            {hasExercise ? (
+              <>
+                <Matrix values={A} readOnly={true} />
+                <Matrix values={B} readOnly={true} />
+              </>
+            ) : (
+              <Typography variant="body1">Click the button to generate a new exercise</Typography>
+            )}
+          </div>
         </Paper>
       </Container>
     )

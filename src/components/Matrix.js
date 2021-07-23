@@ -1,33 +1,62 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './Matrix.css'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+
+const styles = (theme) => ({
+  button: {
+    margin: theme.spacing(1, 1, 0, 0)
+  },
+  cell: {
+    width: '4ch',
+    margin: theme.spacing(1),
+    '& .MuiInputBase-input': {
+      textAlign: 'center'
+    }
+  },
+  divTable: {
+    display: 'inline-flex',
+    width: 'auto',
+    borderLeft: '1px solid #666666',
+    borderRight: '1px solid #666666',
+    borderSpacing: '5px',
+    margin: theme.spacing(1)
+  },
+  divTableRow: {
+    display: 'table-row',
+    width: 'auto',
+    clear: 'both'
+  },
+  divTableCol: {
+    // float: 'left' /* fix for  buggy browsers */,
+    display: 'tableColumn',
+    width: 'auto'
+  }
+})
 
 const getShape = (matrix) => {
   return [matrix.length, matrix.length === 0 ? 0 : matrix[0].length]
 }
 
-export default class Matrix extends Component {
+class Matrix extends Component {
   render() {
-    const { values, readonly, onChange } = this.props
+    const { values, readOnly, onChange, classes } = this.props
     const [numberOfRows, numberOfColumns] = getShape(values)
     console.log(values, numberOfRows, numberOfColumns)
 
     return (
-      <div>
-        <h1>Test</h1>
-        <p>This is not a test.</p>
+      <div className={classes.divTable}>
         {values.map((row, i) => (
-          <div key={`row-${i}`}>
+          <div key={`row-${i}`} className={classes.divTableRow}>
             {row.map((column, j) => (
-              <input
-                className="MatrixCell"
-                key={`cell-${i}-${j}`}
-                type="text"
-                value={column}
-                pattern="\d*"
-                readOnly={readonly}
-                onChange={(e) => onChange(i, j, e.target.value)}
-              />
+              <div className={classes.divTableCol} key={`cell-${i}-${j}`}>
+                <TextField
+                  className={classes.cell}
+                  value={column}
+                  readOnly={readOnly}
+                  onChange={(e) => onChange(i, j, e.target.value)}
+                />
+              </div>
             ))}
           </div>
         ))}
@@ -39,9 +68,12 @@ export default class Matrix extends Component {
 Matrix.propTypes = {
   values: PropTypes.arrayOf(PropTypes.array),
   onChange: PropTypes.func,
-  readonly: PropTypes.bool
+  readOnly: PropTypes.bool
 }
 
 Matrix.defaultProps = {
-  readonly: false
+  readonly: false,
+  onChange: () => {}
 }
+
+export default withStyles(styles)(Matrix)
