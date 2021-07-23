@@ -106,7 +106,8 @@ Change the `src/App.js` to the following:
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import Typography from '@material-ui/core/Typography'
 
 const styles = (theme) => ({
   progress: {
@@ -123,24 +124,16 @@ class App extends Component {
 
     this.state = {
       isLoaded: false,
-      version: '',
-      pyodide: null
+      version: null
     }
   }
 
-  getVersion = () => {
-    this.pyodide.runPythonAsync(`
+  pyodideLoadedHandler = (pyodide) => {
+    const version = pyodide.runPython(`
     import sys
     sys.version
 `)
-      .then(version => this.setState({ version }))
-      .catch(error => console.log(error))
-  }
-
-  pyodideLoadedHandler = (pyodide) => {
-    this.setState(
-      { isLoaded: true, pyodide },
-      getVersion)
+    this.setState({ isLoaded: true, version })
   }
 
   componentDidMount() {
@@ -161,7 +154,8 @@ class App extends Component {
     if (!isLoaded) {
       return (
         <div className={classes.progress}>
-          <CircularProgress />
+          <Typography variant="h2">Loading Python</Typography>
+          <LinearProgress />
         </div>
       )
     }

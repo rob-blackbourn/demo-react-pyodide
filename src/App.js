@@ -1,34 +1,66 @@
 import React, { Component } from 'react'
-import Matrix from './components/Matrix'
+import { withStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import Typography from '@material-ui/core/Typography'
 
-function updateMatrix(matrix, i, j, value) {
-  return matrix.map((row, r) => row.map((column, c) => (r === i && c === j ? value : column)))
-}
-export default class App extends Component {
+const styles = (theme) => ({
+  progress: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  }
+})
+
+class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      matrix: [
-        [1, 2, 3],
-        [4, 5, 6]
-      ]
+      isLoaded: false,
+      version: null
     }
   }
 
-  onChangeHandler = (i, j, value) => {
-    this.setState({
-      matrix: updateMatrix(this.state.matrix, i, j, value)
-    })
+  pyodideLoadedHandler = (pyodide) => {
+    const version = pyodide.runPython(`
+    import sys
+    sys.version
+`)
+    this.setState({ isLoaded: true, version })
+  }
+
+  componentDidMount() {
+    window
+      .loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.17.0/full/' })
+      .then((response) => {
+        this.pyodideLoadedHandler(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render() {
-    const { matrix } = this.state
+    const { isLoaded, version } = this.state
+    const { classes } = this.props
 
-    return (
-      <div>
-        <Matrix values={matrix} readonly={true} onChange={this.onChangeHandler} />
-      </div>
-    )
+    if (!isLoaded) {
+      return (
+        <div className={classes.progress}>
+          <Typography variant="h2">Loading Python</Typography>
+          <LinearProgress />
+        </div>
+      )
+    }
+
+    return <div>{version}</div>
   }
 }
+
+App.propTypes = {
+  classes: PropTypes.object
+}
+
+export default withStyles(styles)(App)
