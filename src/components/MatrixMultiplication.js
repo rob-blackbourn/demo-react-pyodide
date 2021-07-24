@@ -44,6 +44,7 @@ class MatrixMultiplication extends Component {
       maxNumberOfRows: 4,
       maxNumberOfColumns: 4,
       hasExercise: false,
+      isGenerating: false,
       m: 1,
       n: 1,
       p: 1,
@@ -61,7 +62,8 @@ class MatrixMultiplication extends Component {
         this.setState({
           ...result,
           answer: result.C.map((row) => row.map((col) => '')),
-          hasExercise: true
+          hasExercise: true,
+          isGenerating: false
         })
         console.log(result)
       })
@@ -83,23 +85,27 @@ class MatrixMultiplication extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('handleSubmit')
-    this.generateExercise()
+    this.setState(
+      {
+        isGenerating: true
+      },
+      this.generateExercise
+    )
   }
 
   render() {
-    const { maxNumberOfRows, maxNumberOfColumns, hasExercise, A, B, C, answer } = this.state
+    const { maxNumberOfRows, maxNumberOfColumns, A, B, C, answer, hasExercise, isGenerating } = this.state
     const { classes } = this.props
 
     const isCorrect = isMatrixEqual(C, answer)
 
     return (
-      <Container maxWidth="lg">
+      <Container maxWidth="sm">
         <Paper className={classes.paper}>
           <form onSubmit={this.handleSubmit}>
             <TextField className={classes.parameter} type="number" value={maxNumberOfRows} label="Max Rows" />
             <TextField className={classes.parameter} type="number" value={maxNumberOfColumns} label="Max Columns" />
-            <Button type="submit" variant="outlined" color="primary" className={classes.button}>
+            <Button className={classes.button} type="submit" disabled={isGenerating}>
               New Exercise
             </Button>
           </form>

@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "https://rob-blackbourn.github.io/demo-react-pyodide/static/css/main.69b321db.chunk.css",
-    "main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.dd6137a7.chunk.js",
-    "main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.dd6137a7.chunk.js.map",
+    "main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.e1dc5d8f.chunk.js",
+    "main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/main.e1dc5d8f.chunk.js.map",
     "runtime-main.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/runtime-main.12f66d28.js",
     "runtime-main.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/runtime-main.12f66d28.js.map",
-    "static/js/2.5aed4c33.chunk.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.5aed4c33.chunk.js",
-    "static/js/2.5aed4c33.chunk.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.5aed4c33.chunk.js.map",
+    "static/css/2.c7dada92.chunk.css": "https://rob-blackbourn.github.io/demo-react-pyodide/static/css/2.c7dada92.chunk.css",
+    "static/js/2.a82e5beb.chunk.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.a82e5beb.chunk.js",
+    "static/js/2.a82e5beb.chunk.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.a82e5beb.chunk.js.map",
     "static/js/3.accd3c8a.chunk.js": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/3.accd3c8a.chunk.js",
     "static/js/3.accd3c8a.chunk.js.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/3.accd3c8a.chunk.js.map",
     "index.html": "https://rob-blackbourn.github.io/demo-react-pyodide/index.html",
-    "static/css/main.69b321db.chunk.css.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/css/main.69b321db.chunk.css.map",
-    "static/js/2.5aed4c33.chunk.js.LICENSE.txt": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.5aed4c33.chunk.js.LICENSE.txt"
+    "static/css/2.c7dada92.chunk.css.map": "https://rob-blackbourn.github.io/demo-react-pyodide/static/css/2.c7dada92.chunk.css.map",
+    "static/js/2.a82e5beb.chunk.js.LICENSE.txt": "https://rob-blackbourn.github.io/demo-react-pyodide/static/js/2.a82e5beb.chunk.js.LICENSE.txt",
+    "static/media/index.css": "https://rob-blackbourn.github.io/demo-react-pyodide/static/media/roboto-vietnamese-400-normal.c0bec65d.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.12f66d28.js",
-    "static/js/2.5aed4c33.chunk.js",
-    "static/css/main.69b321db.chunk.css",
-    "static/js/main.dd6137a7.chunk.js"
+    "static/css/2.c7dada92.chunk.css",
+    "static/js/2.a82e5beb.chunk.js",
+    "static/js/main.e1dc5d8f.chunk.js"
   ]
 }

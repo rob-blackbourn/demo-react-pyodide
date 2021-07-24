@@ -19,39 +19,15 @@ class App extends Component {
     super(props)
 
     this.state = {
-      isLoaded: false,
-      version: null
+      pyodide: null
     }
-  }
-
-  initialize
-
-  loadPythonPackages = (pyodide) => {
-    return pyodide.loadPackage(['numpy'])
-  }
-
-  getPythonVersion = (pyodide) => {
-    return pyodide.runPythonAsync(
-      `
-import sys
-sys.version
-`
-    )
-  }
-
-  pyodideLoadedHandler = (pyodide) => {
-    this.loadPythonPackages(pyodide)
-      .then(() => this.getPythonVersion(pyodide))
-      .then((version) => {
-        this.setState({ isLoaded: true, version, pyodide })
-      })
   }
 
   componentDidMount() {
     window
       .loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.17.0/full/' })
-      .then((response) => {
-        this.pyodideLoadedHandler(response)
+      .then((pyodide) => {
+        this.setState({ pyodide })
       })
       .catch((error) => {
         console.log(error)
@@ -59,21 +35,16 @@ sys.version
   }
 
   render() {
-    const { isLoaded, version, pyodide } = this.state
+    const { pyodide } = this.state
     const { classes } = this.props
 
-    if (!isLoaded) {
-      return (
-        <div className={classes.progress}>
-          <Typography variant="h2">Loading Python</Typography>
-          <LinearProgress />
-        </div>
-      )
-    }
-
-    return (
+    return pyodide == null ? (
+      <div className={classes.progress}>
+        <Typography variant="h2">Loading Python</Typography>
+        <LinearProgress />
+      </div>
+    ) : (
       <div>
-        <div>{version}</div>
         <MatrixMultiplication pyodide={pyodide} />
       </div>
     )
